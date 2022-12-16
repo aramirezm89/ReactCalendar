@@ -4,14 +4,14 @@ import { AuthRoutes } from "../auth/routes/AuthRoutes";
 import { CalendarRoutes } from "../calendar/routes/CalendarRoutes";
 
 export const AppRouter = () => {
-  const status = "not-athenticated";
+  const status = "authenticated" /* "not-authenticated" */;
   return (
     <Routes>
       {/* TODO :
         validar authStatus y mostrar rutas segun ese estado
     */}
 
-      {status === "not-athenticated" ? (
+      {status === "not-authenticated" ? (
         <Route path="/auth/*" element={<AuthRoutes />} />
       ) : (
         <Route path="/*" element={<CalendarRoutes />} />
