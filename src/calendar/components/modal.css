@@ -1,0 +1,8 @@
+.react-datepicker-time__input > input{
+    border-radius: 5px;
+    border: 1px solid;
+    border-color: #5c5b5b;
+    padding: 3px;
+    margin: 1px;
+}
+
