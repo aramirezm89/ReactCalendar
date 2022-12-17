@@ -1,17 +1,24 @@
 import { differenceInSeconds } from "date-fns";
-import { useState } from "react"
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { setCloseModal } from "../../store/calendar/calendarSlice";
+import { useCalendarStore } from "./useCalendarStore";
 import { useUiStore } from "./useUiStore";
 
 
 export const useFormModal = (initialState = {}) => {
 
     const [formState, setFormState] = useState(initialState)
-      const [submitForm, setSubmitForm] = useState(false);
+    const {activeEvent} = useCalendarStore()
+    useEffect(() => {
+    if(activeEvent !==null){
+      setFormState({...activeEvent})
+    }
+    }, [activeEvent])
+    
+    const [submitForm, setSubmitForm] = useState(false);
 
-      const {closeModal} = useUiStore();
+   const {closeModal} = useUiStore();
+
    const onInputChange = ({target}) =>{
     const {value,name} = target;
     setFormState({
@@ -21,6 +28,7 @@ export const useFormModal = (initialState = {}) => {
    }
 
    const onDateChange = (date, name) => [
+    
      setFormState({
        ...formState,
        [name]: date,
@@ -31,9 +39,9 @@ export const useFormModal = (initialState = {}) => {
        event.preventDefault();
        setSubmitForm(true);
 
-       const dateDifference = differenceInSeconds(formState.endDate, formState.startDate);
+       const dateDifference = differenceInSeconds(formState.end, formState.start);
     
-
+     
        if (isNaN(dateDifference) || dateDifference < 0) {
          Swal.fire(
            "Error",

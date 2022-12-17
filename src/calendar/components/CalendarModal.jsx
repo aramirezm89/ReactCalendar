@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import "sweetalert2/dist/sweetalert2.min.css";
-import { useUiStore } from "../../auth/hooks";
+import { useCalendarStore, useUiStore } from "../../auth/hooks";
 import { useFormModal } from "../../auth/hooks/useFormModal";
 import { onCloseDateModal } from "../../store/ui/uiSlice";
 import "./modal.css";
@@ -25,18 +25,20 @@ Modal.setAppElement("#root");
 
 export const CalendarModal = () => {
   //redux
-  const { isDateModalOpen, closeModal, openModal } = useUiStore();
-
+  const { isDateModalOpen, closeModal } = useUiStore();
+  
+  const {activeEvent} = useCalendarStore();
 
   //form
-  const {  onInputChange, formState,onDateChange,onSubmitForm,submitForm } = useFormModal({
-    startDate: new Date(),
-    endDate: addHours(new Date(),2),
-    title: "",
-    notes: "",
-  });
+  const { onInputChange, formState, onDateChange, onSubmitForm, submitForm } =
+    useFormModal({
+      title:'',
+      notes:'',
+      start:new Date(),
+      end:addHours(new Date(),2)
+    });
 
-  const { startDate, endDate, title, notes } = formState;
+  const { start, end, title, notes } = formState;
 
 //closeModal
   const onCloseModal = () => {
@@ -64,8 +66,8 @@ export const CalendarModal = () => {
               timeInputLabel="Hora:"
               locale={esEs}
               className="form-control "
-              selected={startDate}
-              onChange={(date) => onDateChange(date, "startDate")}
+              selected={start}
+              onChange={(date) => onDateChange(date, "start")}
             />
           </div>
 
@@ -75,11 +77,12 @@ export const CalendarModal = () => {
               showTimeInput
               timeInputLabel="Hora:"
               dateFormat="Pp"
-              minDate={startDate}
+              minDate={start}
               locale={esEs}
               className="form-control"
-              selected={endDate}
-              onChange={(date) => onDateChange(date, "endDate")}
+              selected={end}
+              onChange={(date) => onDateChange(date, "end")}
+              
             />
           </div>
 
