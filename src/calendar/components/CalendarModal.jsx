@@ -3,11 +3,9 @@ import esEs from "date-fns/locale/es";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from "react-modal";
-import { useDispatch, useSelector } from "react-redux";
 import "sweetalert2/dist/sweetalert2.min.css";
-import { useCalendarStore, useUiStore } from "../../auth/hooks";
+import { useUiStore } from "../../auth/hooks";
 import { useFormModal } from "../../auth/hooks/useFormModal";
-import { onCloseDateModal } from "../../store/ui/uiSlice";
 import "./modal.css";
 
 const customStyles = {
@@ -27,7 +25,7 @@ export const CalendarModal = () => {
   //redux
   const { isDateModalOpen, closeModal } = useUiStore();
   
-  const {activeEvent} = useCalendarStore();
+  
 
   //form
   const { onInputChange, formState, onDateChange, onSubmitForm, submitForm } =

@@ -8,7 +8,8 @@ import { useUiStore } from "./useUiStore";
 export const useFormModal = (initialState = {}) => {
 
     const [formState, setFormState] = useState(initialState)
-    const {activeEvent} = useCalendarStore()
+    const {activeEvent,startSavingEvent} = useCalendarStore();
+
     useEffect(() => {
     if(activeEvent !==null){
       setFormState({...activeEvent})
@@ -35,7 +36,9 @@ export const useFormModal = (initialState = {}) => {
      }),
    ];
 
-     const onSubmitForm = (event) => {
+     const onSubmitForm = async (event) => {
+      
+      
        event.preventDefault();
        setSubmitForm(true);
 
@@ -59,7 +62,9 @@ export const useFormModal = (initialState = {}) => {
 
        //TODO:cerrarModal
 
+     await startSavingEvent(formState)
       closeModal();
+      setSubmitForm(false);
      };
 
 

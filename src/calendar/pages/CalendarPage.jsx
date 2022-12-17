@@ -5,6 +5,8 @@ import { useCalendarStore, useUiStore } from "../../auth/hooks";
 import { getMessagesEs } from "../../helpers";
 import { localizer } from "../../helpers/calendarLocalizer";
 import { CalendarModal } from "../components";
+import { FabAddNewButton } from "../components/FabAddNewButton";
+import { FabDeleteButton } from "../components/FabDeleteButton";
 
 import { NavBar } from "../components/NavBar";
 
@@ -12,7 +14,7 @@ import { NavBar } from "../components/NavBar";
 
 export const CalendarPage = () => {
 
-  const { events,setActiveEvent } = useCalendarStore();
+  const { events,setActiveEvent,activeEvent } = useCalendarStore();
   const [lastView, setLastView] = useState(localStorage.getItem('lastView')||'month')
   const {openModal} = useUiStore()
 
@@ -69,9 +71,13 @@ export const CalendarPage = () => {
           onSelectEvent={onSelect}
           onView={onViewChange}
         />
+        <FabAddNewButton/>
+      
+       <FabDeleteButton/>
+       
       </div>
 
-      <CalendarModal/>
+      <CalendarModal />
     </>
   );
 };
