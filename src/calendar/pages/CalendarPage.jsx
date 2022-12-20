@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Calendar } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { useCalendarStore, useUiStore } from "../../auth/hooks";
+import { useCalendarStore, useUiStore } from "../../hooks";
 import { getMessagesEs } from "../../helpers";
 import { localizer } from "../../helpers/calendarLocalizer";
 import { CalendarModal } from "../components";
@@ -14,6 +14,7 @@ import { NavBar } from "../components/NavBar";
 
 export const CalendarPage = () => {
 
+  
   const { events,setActiveEvent,activeEvent } = useCalendarStore();
   const [lastView, setLastView] = useState(localStorage.getItem('lastView')||'month')
   const {openModal} = useUiStore()

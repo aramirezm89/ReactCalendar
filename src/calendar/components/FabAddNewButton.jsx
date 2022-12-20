@@ -1,5 +1,5 @@
 import { addHours } from "date-fns";
-import { useCalendarStore, useUiStore } from "../../auth/hooks";
+import { useCalendarStore, useUiStore } from "../../hooks";
 
 export const FabAddNewButton = () => {
 
@@ -23,7 +23,7 @@ export const FabAddNewButton = () => {
   return (
     <>
       <button className="btn btn-primary fab" onClick={handleClickNew}>
-        <i class="fa-thin fa-plus"></i>
+        <i className="fa-thin fa-plus"></i>
       </button>
     </>
   );

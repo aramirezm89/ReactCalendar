@@ -4,8 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from "react-modal";
 import "sweetalert2/dist/sweetalert2.min.css";
-import { useUiStore } from "../../auth/hooks";
-import { useFormModal } from "../../auth/hooks/useFormModal";
+import { useUiStore,useFormModal } from "../../hooks";
 import "./modal.css";
 
 const customStyles = {

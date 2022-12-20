@@ -1,5 +1,5 @@
 
-import { useCalendarStore, useUiStore } from "../../auth/hooks";
+import { useCalendarStore, useUiStore } from "../../hooks";
 
 export const FabDeleteButton = () => {
 
@@ -14,7 +14,7 @@ export const FabDeleteButton = () => {
   return (
     <>
       <button className="btn btn-danger fab-danger" onClick={handleDelete} style={{display:(selectedEvent && !isDateModalOpen)?'':'none'}}>
-        <i class="fa fa-trash-alt"></i>
+        <i className="fa fa-trash-alt"></i>
       </button>
     </>
   );
