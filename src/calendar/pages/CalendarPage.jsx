@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Calendar } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { useCalendarStore, useUiStore } from "../../hooks";
@@ -15,9 +15,14 @@ import { NavBar } from "../components/NavBar";
 export const CalendarPage = () => {
 
   
-  const { events,setActiveEvent,activeEvent } = useCalendarStore();
+  const { events,setActiveEvent,startLoadingEvents } = useCalendarStore();
   const [lastView, setLastView] = useState(localStorage.getItem('lastView')||'month')
   const {openModal} = useUiStore()
+
+  useEffect(() => {
+   startLoadingEvents();
+  }, [])
+  
 
   //funcion que se encarga de dar estilo al mensage de evento seleccionado
   const eventStyleGetter = (event, start, end, isSelected) => {

@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { LoginPage } from "../auth";
 import { AuthRoutes } from "../auth/routes/AuthRoutes";
 import { CalendarRoutes } from "../calendar/routes/CalendarRoutes";
 import { useAuthStore } from "../hooks";
 
 export const AppRouter = () => {
   
-  const {status,checkAuthToken} =useAuthStore()
+  const {status,checkAuthToken} =useAuthStore();
+
 
   useEffect(() => {
    checkAuthToken()

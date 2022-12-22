@@ -43,9 +43,8 @@ export const useAuthStore = () => {
 
       dispatch(onLogin({ name: data.usuario.name, uid: data.usuario._id }));
     } catch (error) {
-
       const { response } = error;
-      
+
       console.log(response);
 
       dispatch(onLogout(response.data.message));
@@ -55,36 +54,32 @@ export const useAuthStore = () => {
     }
   };
 
-
   //utilizada en AppRouter
-  const checkAuthToken = async () =>{
-    const token = localStorage.getItem('token');
-    if(!token) return dispatch(onLogout());
-
+  const checkAuthToken = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return dispatch(onLogout());
     try {
-      const {data} = calendarApi.get('/auth/renew');
+      const { data } = await calendarApi.get("/auth/renew");
 
-       localStorage.setItem("token", data.token);
+      localStorage.setItem("token", data.token);
 
-       //token-init-date para poder saber si el token aun es activo y no volver a generar
-       localStorage.setItem("token.init-date", new Date().getTime());
+      //token-init-date para poder saber si el token aun es activo y no volver a generar
+      localStorage.setItem("token.init-date", new Date().getTime());
 
-       dispatch(onLogin(data.usuario.name,data.uid))
-
+      dispatch(onLogin(data.usuario.name, data.uid));
     } catch (error) {
-      localStorage.clear();
-      console.log(error)
-      dispatch(onLogout())
+      localStorage.removeItem("token");
+      localStorage.removeItem("token.init-date");
+      console.log(error);
+      dispatch(onLogout());
     }
-  }
+  };
 
-
-  const startLogout = () =>{
+  const startLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("token.init-date");
     dispatch(onLogout());
-
-  }
+  };
   return {
     // propiedades
     status,
@@ -94,6 +89,6 @@ export const useAuthStore = () => {
     checkAuthToken,
     startLogin,
     startLogout,
-    startRegister
+    startRegister,
   };
 };
