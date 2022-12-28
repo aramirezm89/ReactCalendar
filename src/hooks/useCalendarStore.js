@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
+import Swal from "sweetalert2";
 import { calendarApi } from "../api";
 import { convertDateEvents } from "../helpers/converDateEvents";
 import { onAddEvent, onDeleteEvent, onLoadEvents, onSetActiveEvent, onUpdateEvent } from "../store";
@@ -23,16 +24,25 @@ export const useCalendarStore = () => {
 
     const startSavingEvent = async (event) =>{
        
-        if(event._id){
+      try {
+          if (event._id) {
             //actualizar
-            dispatch(onUpdateEvent(event))
-        }else{
-            //crear
-           const {data} =  await calendarApi.post('/calendar',event);
-           console.log(data); 
+            
+            await calendarApi.put(`/calendar/${event._id}`, event);
+            dispatch(onUpdateEvent({ ...event, user }));
+            return
+          }
 
-          dispatch(onAddEvent({...event,_id:data.evento._id,user}));
-        }
+          //crear
+          const { data } = await calendarApi.post("/calendar", event);
+          console.log(data);
+
+          dispatch(onAddEvent({ ...event, _id: data.evento._id, user }));
+        
+      } catch (error) {
+        console.log(error);
+        Swal.fire('Error al guardar',error.response.data.msg,'error')
+      }
     }
 
     const startDeletingEvent = () =>{

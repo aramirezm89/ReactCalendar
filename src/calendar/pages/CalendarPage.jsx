@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Calendar } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { useCalendarStore, useUiStore } from "../../hooks";
+import { useAuthStore, useCalendarStore, useUiStore } from "../../hooks";
 import { getMessagesEs } from "../../helpers";
 import { localizer } from "../../helpers/calendarLocalizer";
 import { CalendarModal } from "../components";
@@ -17,7 +17,9 @@ export const CalendarPage = () => {
   
   const { events,setActiveEvent,startLoadingEvents } = useCalendarStore();
   const [lastView, setLastView] = useState(localStorage.getItem('lastView')||'month')
+  const {user} = useAuthStore()
   const {openModal} = useUiStore()
+
 
   useEffect(() => {
    startLoadingEvents();
@@ -26,8 +28,12 @@ export const CalendarPage = () => {
 
   //funcion que se encarga de dar estilo al mensage de evento seleccionado
   const eventStyleGetter = (event, start, end, isSelected) => {
+    
+  
+    const isMyEvent = (user.uid === event.user._id) || (user.uid === event.user.uid);
+
     const style = {
-      backgroundColor: "#347CF7",
+      backgroundColor: isMyEvent ? "#347CF7" : 'red',
       borderRadius: "0px",
       opacity: 0.8,
       color: "white",

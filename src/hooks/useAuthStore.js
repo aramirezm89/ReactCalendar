@@ -1,8 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { calendarApi } from "../api";
 import { clearErrorMessage, onChecking, onLogin, onLogout } from "../store";
+
 export const useAuthStore = () => {
+
   const { status, user, errorMessage } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
 
   const startLogin = async ({ email, password }) => {
@@ -60,13 +63,14 @@ export const useAuthStore = () => {
     if (!token) return dispatch(onLogout());
     try {
       const { data } = await calendarApi.get("/auth/renew");
-
+      
       localStorage.setItem("token", data.token);
 
       //token-init-date para poder saber si el token aun es activo y no volver a generar
       localStorage.setItem("token.init-date", new Date().getTime());
 
-      dispatch(onLogin(data.usuario.name, data.uid));
+     
+      dispatch(onLogin({user:data.usuario.name,uid: data.usuario._id}));
     } catch (error) {
       localStorage.removeItem("token");
       localStorage.removeItem("token.init-date");

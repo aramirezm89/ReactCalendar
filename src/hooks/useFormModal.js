@@ -62,6 +62,7 @@ export const useFormModal = (initialState = {}) => {
 
        //TODO:cerrarModal
 
+       console.log(formState)
      await startSavingEvent(formState)
       closeModal();
       setSubmitForm(false);
