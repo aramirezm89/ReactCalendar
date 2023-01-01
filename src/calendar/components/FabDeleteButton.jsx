@@ -8,6 +8,7 @@ export const FabDeleteButton = () => {
     const {isDateModalOpen} = useUiStore();
 
     const handleDelete = () =>{
+      
       startDeletingEvent();
     }
   
